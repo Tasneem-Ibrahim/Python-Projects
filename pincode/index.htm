@@ -1,0 +1,218 @@
+<!-- index.htm -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistan Pincode Lookup</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #d8f3ee, #dce8ff);
+        }
+
+        .card {
+            width: 360px;
+            padding: 24px;
+            background: #ffffff;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            background-image:
+                linear-gradient(#ffffff, #ffffff),
+                linear-gradient(135deg, #159f91, #3f6fd9);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: 0 10px 25px rgba(40, 90, 100, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #137f75;
+            margin-bottom: 5px;
+            font-size: 23px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 11px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #245b70;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        input {
+            width: 100%;
+            padding: 9px 11px;
+            border: 1.5px solid #9fd5ce;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+            background: #fbffff;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #378bcf;
+            box-shadow: 0 0 0 3px rgba(55, 139, 207, 0.12);
+        }
+
+        #pincode {
+            letter-spacing: 1px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 3px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #159f91, #3f6fd9);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(40, 110, 160, 0.2);
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 12px;
+            min-height: 17px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <h1>Location Lookup</h1>
+
+        <p class="subtitle">
+            Enter your PIN code to auto-fill your location
+        </p>
+
+        <form id="pincodeForm">
+
+            <div class="form-group">
+                <label for="pincode">PIN Code</label>
+                <input
+                    type="text"
+                    id="pincode"
+                    placeholder="Enter PIN code"
+                    maxlength="5"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="city">City</label>
+                <input
+                    type="text"
+                    id="city"
+                    placeholder="City"
+                    readonly
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="state">State / Province</label>
+                <input
+                    type="text"
+                    id="state"
+                    placeholder="State / Province"
+                    readonly
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="district">District</label>
+                <input
+                    type="text"
+                    id="district"
+                    placeholder="District"
+                    readonly
+                >
+            </div>
+
+            <button type="submit">Find Location</button>
+
+            <p id="message"></p>
+
+        </form>
+    </div>
+
+
+    <script>
+        const form = document.getElementById("pincodeForm");
+
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const pincode = document.getElementById("pincode").value.trim();
+
+            const city = document.getElementById("city");
+            const state = document.getElementById("state");
+            const district = document.getElementById("district");
+            const message = document.getElementById("message");
+
+            try {
+
+                const response = await fetch(
+                    `http://127.0.0.1:8000/pincode/${pincode}`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Pincode not found");
+                }
+
+                const data = await response.json();
+
+                city.value = data.result.city;
+                state.value = data.result.state;
+                district.value = data.result.district;
+
+                message.textContent = "Location found successfully.";
+
+            } catch (error) {
+
+                city.value = "";
+                state.value = "";
+                district.value = "";
+
+                message.textContent = "Pincode not found.";
+            }
+        });
+    </script>
+
+</body>
+</html>
