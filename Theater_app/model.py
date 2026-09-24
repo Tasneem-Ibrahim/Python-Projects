@@ -1,4 +1,5 @@
 # Theater_app\model.py
+
 from sqlmodel import Field, SQLModel, create_engine
 from typing import Optional
 from datetime import datetime, timezone
@@ -14,17 +15,6 @@ class Review(SQLModel, table=True):
         default_factory=lambda: datetime.now(timezone.utc)
 
     )
-  
-# Table structure (Schema) for the Review model
-class Tasneem(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    play_name: str = Field(index=True)
-    reviewer_name: str
-    rating: int = Field(ge=1, le=5)  # Rating between 1 and 5
-    comment: str
-    created_at: datetime = Field(default_factory=datetime.now)
-
-    #  uv run python model.py
 
 
 
