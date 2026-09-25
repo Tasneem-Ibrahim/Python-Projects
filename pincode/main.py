@@ -1,10 +1,10 @@
 # main.py
 
 from fastapi import FastAPI
-from pincode.data import PINCODES
-from pincode.interface import LocationResponse, ResponseObject
+from data import PINCODES
+from interface import LocationResponse, ResponseObject
 from fastapi.middleware.cors import CORSMiddleware
-from pincode.exception import InvalidPinCodeError, invalid_pincode_error_hnadler
+from exception import InvalidPinCodeError, invalid_pincode_error_hnadler
 
 app = FastAPI(
     title="pincode-project",

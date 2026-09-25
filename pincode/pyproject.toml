@@ -1,5 +1,5 @@
 [project]
-name = "new-folder"
+name = "pincode"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -7,19 +7,11 @@ authors = [
     { name = "Tasneem-Ibrahim", email = "tasneem.techsprint@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = [
-    "fastapi[standard]>=0.141.1",
-    "uvicorn[standard]>=0.52.4",
-]
+dependencies = []
 
 [project.scripts]
-new-folder = "new_folder:main"
+pincode = "pincode:main"
 
 [build-system]
 requires = ["uv_build>=0.12.13,<0.13.0"]
 build-backend = "uv_build"
-
-[tool.uv.workspace]
-members = [
-    "Theater_app",
-]
