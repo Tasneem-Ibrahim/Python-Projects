@@ -2,7 +2,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from engine import create_tables
-from routes.review_route import router
+from routes.review_route import router as review_router
 
 #  control your starting and ending of server
 @asynccontextmanager
@@ -21,7 +21,7 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-app.include_router(router, tags=["Reviews"])
+app.include_router(review_router, tags=["Reviews"])
 
 @app.get("/")
 def hello():

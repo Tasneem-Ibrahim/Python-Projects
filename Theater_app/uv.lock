@@ -733,6 +733,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
+    { name = "rich" },
     { name = "sqlmodel" },
     { name = "uvicorn", extra = ["standard"] },
 ]
@@ -740,6 +741,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.141.1" },
+    { name = "rich", specifier = ">=15.0.0" },
     { name = "sqlmodel", specifier = ">=0.0.47" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.52.4" },
 ]
