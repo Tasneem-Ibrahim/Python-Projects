@@ -71,20 +71,20 @@ def get_average_rating(play_name: str, session: Session = Depends(get_session)):
     return ReviewAvgResponse(count=total_reviews, items=AvgResponse(play_name=play_name, average_rating=avg_rating, total_reviews=total_reviews))
 
 # =------------------------------------------------------------
-@router.patch("/{review_id}", response_model=Review)
+@router.patch("/{id}", response_model=Review)
 def update_review(
-    review_id: int, 
+    id: int,
     review: ReviewUpdate,
     session: Session = Depends(get_session)  
 
 ):
-    existing_review = session.get(Review, review_id)
+    existing_review = session.get(Review, id)
 
     if not existing_review:
         raise InvalidReviewError(
             404,
-            str(review_id),
-            f"Review with id {review_id} not found"
+            str(id),
+            f"Review with id {id} not found"
         )
 
     if review.play_name is not None:
@@ -103,40 +103,40 @@ def update_review(
     return existing_review
 
 #-------------------------------------------------------------
-# in this code uses ReviewCreateand required 4 4 fields to update the review.
-# @router.patch("/{id}")
-# def update_review(id: int, review: ReviewCreate, session: Session = Depends(get_session)):
-#     existing_review = session.get(Review, id) # Database mein given id wala review search karta hai.
 
-#     if not existing_review:
-#         raise InvalidReviewError(
-#             404, "", str(id), f"Review with id {id} not found"
-#         )
+@router.put("/{id}")
+def update_review(id: int, review: ReviewCreate, session: Session = Depends(get_session)):
+    existing_review = session.get(Review, id) # Search review by id in the database and return the existing review object if found.
 
-#     for key, value in review.dict(exclude_unset=True).items():
-#         setattr(existing_review, key, value) 
+    if not existing_review:
+        raise InvalidReviewError(
+            404, "", str(id), f"Review with id {id} not found"
+        )
+
+    for key, value in review.dict(exclude_unset=True).items():
+        setattr(existing_review, key, value) 
     
-#     session.commit()  
-#     session.refresh(existing_review)
+    session.commit()  
+    session.refresh(existing_review)
 
-#     return {"message": "Review updated successfully", "review": existing_review}
+    return {"message": "Review updated successfully", "review": existing_review}
 
 # -------------------------------------------------------------
 
-@router.delete("/{review_id}")
+@router.delete("/{id}")
 def delete_review(
-    review_id: int,
+    id: int,
     session: Session = Depends(get_session)  # Database session FastAPI Depends(), through automatically provide .
 ):
-    existing_review = session.get(Review, review_id) 
-    # Searches the database for the review with the given review_id.
+    existing_review = session.get(Review, id) 
+    # Searches the database for the review with the given id.
     # If the review is found, it will be stored in the existing_review variable.
 
     if not existing_review:
         raise InvalidReviewError(
             404,
-            str(review_id),
-            f"Review with id {review_id} not found"
+            str(id),
+            f"Review with id {id} not found"
         )
 
     session.delete(existing_review)
