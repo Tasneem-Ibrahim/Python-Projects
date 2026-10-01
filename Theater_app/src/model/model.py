@@ -1,4 +1,4 @@
-# Theater_app\model.py
+# Theater_app\src\model\model.py
 
 from sqlmodel import Field, SQLModel, create_engine
 from typing import Optional
@@ -15,22 +15,4 @@ class Review(SQLModel, table=True):
         default_factory=lambda: datetime.now(timezone.utc)
     )
 
-
-
-# #  Respnse Body Structure
-# class ReviewRead(SQLModel):
-#     id: int
-#     play_name: str
-#     reviewer_name: str
-#     rating: int
-#     comment: str
-#     created_at: datetime
-
-# class ReviewUpdate(SQLModel):
-#     play_name: Optional[str] = None
-#     reviewer_name: Optional[str] = None
-#     rating: Optional[int] = Field(default=None, ge=1, le=5)
-#     comment: Optional[str] = None
-
-
-
+# model.py defines the structure/schema of the Review database table, including its fields, data types, and validation rules.

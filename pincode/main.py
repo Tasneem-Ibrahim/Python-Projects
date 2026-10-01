@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI
 from data import PINCODES
-from interface import LocationResponse, ResponseObject
+from validator import LocationResponse, ResponseObject
 from fastapi.middleware.cors import CORSMiddleware
 from exception import InvalidPinCodeError, invalid_pincode_error_hnadler
 
